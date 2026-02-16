@@ -51,7 +51,7 @@ The dataset contains weather attributes such as temperature, humidity, wind spee
 
 ### 3.6 Data Storage
 - Saved cleaned dataset in:
-
+data/processed/weather_cleaned.csv
 
 ---
 
