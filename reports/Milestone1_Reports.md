@@ -50,8 +50,7 @@ The dataset contains weather attributes such as temperature, humidity, wind spee
 - Performed monthly aggregation for temperature
 
 ### 3.6 Data Storage
-- Saved cleaned dataset in:
-data/processed/weather_cleaned.csv
+- Saved cleaned dataset in:'data/processed/weather_cleaned.csv'
 
 ---
 
