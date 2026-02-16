@@ -37,7 +37,7 @@ src/
   data_processing.py
 
 reports/
-  Milestone_1_Report.md
+  Milestone1_Report.md
 
 ---
 
