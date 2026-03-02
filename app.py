@@ -115,6 +115,7 @@ def load_and_clean_data():
 
 # ---------------- DASHBOARD ---------------- #
 def dashboard():
+    st.sidebar.title("welcome")
     st.sidebar.title("🌡 ClimateScope")
     if st.sidebar.button("Logout"):
         st.session_state.logged_in = False
