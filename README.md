@@ -47,6 +47,39 @@ data/processed/weather_cleaned.csv
 
 ---
 
-## Next Phase
-Milestone 2 – Data Analysis and Visualization
-# Infosys-Climate_Scope
+---
+
+# ✅ Milestone 2 – Data Analysis & Visualization
+
+Milestone 2 focuses on extracting insights from the cleaned dataset generated in Milestone 1.
+
+## 📊 Statistical Analysis
+- Generated descriptive statistics (mean, median, std deviation, min, max)
+- Saved results as:
+  reports/statistical_summary.csv
+
+## 📈 Seasonal Temperature Trend
+- Converted date column to datetime
+- Calculated monthly average temperature
+- Visualized seasonal patterns
+- Saved trend chart inside:
+  reports/figures/
+
+## 🔥 Correlation Analysis
+- Generated correlation matrix
+- Created heatmap visualization
+- Saved inside:
+  reports/figures/
+
+## 🌡 Extreme Weather Detection
+- Applied Z-score method (|Z| > 3)
+- Identified extreme temperature events
+- Saved results as:
+  reports/extreme_weather_events.csv
+
+## 🌍 Regional Comparison
+- Identified Top 10 hottest countries
+- Generated bar chart visualization
+
+All visualizations are available in:
+reports/figures/
