@@ -1,121 +1,332 @@
-# CLIMATE SCOPE PROJECT
-# Milestone 2 – Core Analysis & Visualization
-
-import os
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-# Paths
+import plotly.express as px
+import os
 
 DATA_PATH = "data/processed/weather_cleaned.csv"
-REPORT_PATH = "reports"
-FIGURE_PATH = os.path.join(REPORT_PATH, "figures")
+REPORT_PATH = "reports/"
+FIGURE_PATH = "reports/figures/"
 
 os.makedirs(REPORT_PATH, exist_ok=True)
 os.makedirs(FIGURE_PATH, exist_ok=True)
 
-print("CLIMATE SCOPE PROJECT")
-print("Milestone 2 – Core Analysis & Visualization\n")
 
-# Load dataset
+# -------------------------------------------------
+# Load Data
+# -------------------------------------------------
+def load_data():
 
-print("Loading cleaned dataset...")
-df = pd.read_csv(DATA_PATH)
-print("Dataset loaded successfully!")
-print(f"Dataset Shape: {df.shape}\n")
+    print("Loading processed dataset...")
+    df = pd.read_csv(DATA_PATH)
 
-print("Columns:", list(df.columns), "\n")
+    if "last_updated" in df.columns:
+        df["last_updated"] = pd.to_datetime(df["last_updated"])
 
-# Select numeric columns safely
+    print("Dataset Loaded:", df.shape)
 
-numeric_df = df.select_dtypes(include="number")
+    return df
 
-# Statistical Analysis
 
-print("Performing statistical analysis...")
-stats = numeric_df.describe()
-stats.to_csv(os.path.join(REPORT_PATH, "statistical_summary.csv"))
-print("Statistical summary saved.\n")
+# -------------------------------------------------
+# Clean Statistical Summary
+# -------------------------------------------------
+def statistical_summary(df):
 
-# Seasonal / Monthly Trend Analysis
+    important_cols = [
+        "temperature_celsius",
+        "humidity",
+        "wind_kph",
+        "pressure_mb",
+        "precip_mm",
+        "cloud",
+        "uv_index"
+    ]
 
-if "last_updated" in df.columns:
-    df["last_updated"] = pd.to_datetime(df["last_updated"], errors="coerce")
+    summary = df[important_cols].describe().round(2)
+
+    summary.to_csv(REPORT_PATH + "clean_statistical_summary.csv")
+
+    print("Clean statistical summary saved")
+
+
+# -------------------------------------------------
+# Correlation Heatmap
+# -------------------------------------------------
+def correlation_heatmap(df):
+
+    cols = [
+        "temperature_celsius",
+        "humidity",
+        "wind_kph",
+        "pressure_mb",
+        "precip_mm",
+        "cloud",
+        "uv_index",
+        "visibility_km",
+        "gust_kph"
+    ]
+
+    corr = df[cols].corr()
+
+    plt.figure(figsize=(12,8))
+
+    sns.heatmap(
+        corr,
+        annot=True,
+        cmap="coolwarm",
+        fmt=".2f",
+        linewidths=0.5
+    )
+
+    plt.title("Correlation Matrix of Key Weather Variables")
+
+    plt.xticks(rotation=45)
+    plt.yticks(rotation=0)
+
+    plt.tight_layout()
+
+    plt.savefig(FIGURE_PATH + "correlation_heatmap.png")
+    plt.close()
+
+    print("Correlation heatmap saved")
+
+
+# -------------------------------------------------
+# Seasonal Temperature Heatmap
+# -------------------------------------------------
+def seasonal_heatmap(df):
+
     df["month"] = df["last_updated"].dt.month
 
-    if "temperature_celsius" in df.columns:
-        monthly_temp = (
-            df.groupby("month")["temperature_celsius"]
-            .mean()
-            .reset_index()
-        )
+    seasonal = df.pivot_table(
+        values="temperature_celsius",
+        index="month",
+        aggfunc="mean"
+    )
 
-        plt.figure(figsize=(8, 5))
-        plt.plot(monthly_temp["month"], monthly_temp["temperature_celsius"], marker="o")
-        plt.title("Monthly Average Temperature Trend")
-        plt.xlabel("Month")
-        plt.ylabel("Temperature (°C)")
-        plt.grid(True)
-        plt.tight_layout()
-        plt.savefig(os.path.join(FIGURE_PATH, "monthly_temperature_trend.png"))
-        plt.close()
+    plt.figure(figsize=(6,6))
 
-        print("Seasonal temperature trend analyzed.\n")
+    sns.heatmap(
+        seasonal,
+        annot=True,
+        cmap="YlOrRd",
+        fmt=".1f"
+    )
 
-# Correlation Analysis
+    plt.title("Seasonal Temperature Heatmap")
 
-print("Performing correlation analysis...")
+    plt.tight_layout()
 
-corr_data = numeric_df.corr()
+    plt.savefig(FIGURE_PATH + "seasonal_temperature_heatmap.png")
+    plt.close()
 
-plt.figure(figsize=(12, 8))
-sns.heatmap(corr_data, cmap="coolwarm", linewidths=0.5)
-plt.title("Correlation Heatmap")
-plt.tight_layout()
-plt.savefig(os.path.join(FIGURE_PATH, "correlation_heatmap.png"))
-plt.close()
+    print("Seasonal heatmap saved")
 
-print("Correlation heatmap saved.\n")
 
+# -------------------------------------------------
+# Monthly Temperature Trend
+# -------------------------------------------------
+def monthly_temperature_trend(df):
+
+    df["month"] = df["last_updated"].dt.month
+
+    monthly = df.groupby("month")["temperature_celsius"].mean()
+
+    plt.figure(figsize=(8,5))
+
+    monthly.plot(marker="o", color="orange")
+
+    plt.title("Monthly Temperature Trend")
+    plt.xlabel("Month")
+    plt.ylabel("Average Temperature (°C)")
+
+    plt.grid(True)
+
+    plt.tight_layout()
+
+    plt.savefig(FIGURE_PATH + "monthly_temperature_trend.png")
+    plt.close()
+
+    print("Monthly temperature trend saved")
+
+
+# -------------------------------------------------
+# Latitude vs Temperature Gradient
+# -------------------------------------------------
+def latitude_temperature_gradient(df):
+
+    plt.figure(figsize=(8,5))
+
+    sns.scatterplot(
+        x=df["latitude"],
+        y=df["temperature_celsius"],
+        alpha=0.6
+    )
+
+    plt.title("Latitude vs Temperature Gradient")
+    plt.xlabel("Latitude")
+    plt.ylabel("Temperature (°C)")
+
+    plt.tight_layout()
+
+    plt.savefig(FIGURE_PATH + "latitude_temperature_gradient.png")
+    plt.close()
+
+    print("Latitude temperature gradient saved")
+
+
+# -------------------------------------------------
+# Wind Speed vs Temperature
+# -------------------------------------------------
+def wind_temperature_scatter(df):
+
+    plt.figure(figsize=(8,5))
+
+    sns.scatterplot(
+        x=df["wind_kph"],
+        y=df["temperature_celsius"],
+        alpha=0.6
+    )
+
+    plt.title("Wind Speed vs Temperature")
+    plt.xlabel("Wind Speed (kph)")
+    plt.ylabel("Temperature (°C)")
+
+    plt.tight_layout()
+
+    plt.savefig(FIGURE_PATH + "wind_vs_temperature.png")
+    plt.close()
+
+    print("Wind vs temperature scatter saved")
+
+
+# -------------------------------------------------
 # Top 10 Hottest Countries
+# -------------------------------------------------
+def regional_temperature_comparison(df):
 
-if "country" in df.columns and "temperature_celsius" in df.columns:
-    country_avg = (
+    top10 = (
         df.groupby("country")["temperature_celsius"]
         .mean()
         .sort_values(ascending=False)
         .head(10)
     )
 
-    plt.figure(figsize=(9, 5))
-    country_avg.plot(kind="bar")
-    plt.title("Top 10 Hottest Countries (Average Temperature)")
-    plt.ylabel("Temperature (°C)")
+    plt.figure(figsize=(10,5))
+
+    top10.plot(kind="bar", color="tomato")
+
+    plt.title("Top 10 Hottest Countries")
+    plt.ylabel("Average Temperature (°C)")
+
     plt.xticks(rotation=45)
+
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGURE_PATH, "top10_hottest_countries.png"))
+
+    plt.savefig(FIGURE_PATH + "top10_hottest_countries.png")
     plt.close()
 
-    print("Top 10 hottest countries chart saved.\n")
+    print("Top hottest countries chart saved")
 
-# Extreme Weather Event Detection (Z-Score)
 
-if "temperature_celsius" in df.columns:
-    temp_mean = df["temperature_celsius"].mean()
-    temp_std = df["temperature_celsius"].std()
+# -------------------------------------------------
+# Weather Distribution
+# -------------------------------------------------
+def weather_distribution(df):
 
-    df["z_score_temp"] = (df["temperature_celsius"] - temp_mean) / temp_std
+    cols = [
+        "temperature_celsius",
+        "humidity",
+        "wind_kph",
+        "pressure_mb"
+    ]
 
-    extreme_events = df[np.abs(df["z_score_temp"]) > 3]
-
-    extreme_events.to_csv(
-        os.path.join(REPORT_PATH, "extreme_weather_events.csv"),
-        index=False
+    df[cols].hist(
+        bins=20,
+        figsize=(10,8),
+        color="skyblue"
     )
 
-    print("Extreme events detected:", len(extreme_events), "\n")
+    plt.suptitle("Distribution of Key Weather Variables")
 
-# Project Completion
+    plt.tight_layout()
 
-print("Milestone 2 Analysis Completed Successfully!")
+    plt.savefig(FIGURE_PATH + "weather_distribution.png")
+    plt.close()
+
+    print("Weather distribution plots saved")
+
+
+# -------------------------------------------------
+# Extreme Weather Events
+# -------------------------------------------------
+def extreme_weather_events(df):
+
+    events = pd.DataFrame({
+
+        "Highest Temperature":[df["temperature_celsius"].max()],
+        "Lowest Temperature":[df["temperature_celsius"].min()],
+        "Highest Wind Speed":[df["wind_kph"].max()],
+        "Highest Precipitation":[df["precip_mm"].max()]
+
+    })
+
+    events.to_csv(REPORT_PATH + "extreme_weather_events.csv", index=False)
+
+    print("Extreme weather events saved")
+
+
+# -------------------------------------------------
+# Choropleth Map (NEW)
+# -------------------------------------------------
+def choropleth_temperature_map(df):
+
+    country_temp = df.groupby("country")["temperature_celsius"].mean().reset_index()
+
+    fig = px.choropleth(
+        country_temp,
+        locations="country",
+        locationmode="ISO-3",
+        color="temperature_celsius",
+        color_continuous_scale="RdYlBu_r",
+        title="Global Average Temperature Distribution"
+    )
+
+    fig.write_html(FIGURE_PATH + "global_temperature_choropleth.html")
+
+    print("Global temperature choropleth map saved")
+
+
+# -------------------------------------------------
+# Main Execution
+# -------------------------------------------------
+def main():
+
+    df = load_data()
+
+    statistical_summary(df)
+
+    correlation_heatmap(df)
+
+    seasonal_heatmap(df)
+
+    monthly_temperature_trend(df)
+
+    latitude_temperature_gradient(df)
+
+    wind_temperature_scatter(df)
+
+    regional_temperature_comparison(df)
+
+    weather_distribution(df)
+
+    extreme_weather_events(df)
+
+    choropleth_temperature_map(df)
+
+    print("Milestone 2 Analysis Completed Successfully")
+
+
+if __name__ == "__main__":
+    main()
