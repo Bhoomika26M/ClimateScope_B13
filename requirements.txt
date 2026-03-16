@@ -1,0 +1,9 @@
+kaggle
+pandas
+numpy
+matplotlib
+seaborn
+plotly
+nbformat
+ipykernel
+streamlit
