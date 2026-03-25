@@ -4,9 +4,11 @@
 
 ClimateScope is a data analytics project focused on analyzing global weather patterns using statistical methods and interactive visualization techniques.
 
-The project is divided into two milestones:
+The project is divided into four milestones:
 - Milestone 1: Data Preparation & Initial Analysis
 - Milestone 2: Statistical Analysis & Interactive Dashboard Development
+- Milestone 3: Visualization Development & Interactivity
+- Milestone 4: Finalization, Testing & Reporting
 
 ---
 
@@ -74,26 +76,7 @@ The dashboard was built using Streamlit with:
 
 ---
 
-# Project Structure
-
-ClimateScope/
-├── dashboard/
-├── src/
-├── milestone1_report.md
-├── milestone2_report.md
-├── README.md
-└── requirements.txt
-
----
-
-# Conclusion
-
-ClimateScope transforms raw global weather data into structured insights and interactive visualizations.
-
-Milestone 1 focused on data preparation and cleaning.
-Milestone 2 focused on statistical analysis and dashboard development.
-
-## Milestone 3: Visualization Development & Interactivity
+# Milestone 3: Visualization Development & Interactivity
 
 In this milestone, an interactive climate analytics dashboard was developed using Streamlit and Plotly.
 
@@ -111,4 +94,106 @@ In this milestone, an interactive climate analytics dashboard was developed usin
 - Temperature distribution plots
 - Key climate insights section
 
-The dashboard enables users to explore climate patterns interactively and identify important environmental trends across different regions.
+---
+
+# Milestone 4: Finalization, Testing & Reporting
+
+## 🎯 Objective
+The final milestone focuses on validating the dashboard, summarizing insights, and preparing project deliverables for presentation and evaluation.
+
+---
+
+## 🧪 Testing & Validation
+
+Comprehensive testing was conducted to ensure:
+- Correct data display and filtering
+- Accuracy of visualizations
+- Proper functioning of interactive components
+- Smooth user experience across all dashboard features
+
+### ✔️ Test Cases Covered
+- Filter functionality (country, month, temperature)
+- Graph updates based on user input
+- Data consistency across visualizations
+- Handling of empty or edge-case inputs
+
+---
+
+## 📊 Climate Insights & Analysis
+
+Key regional and global insights were derived from the dataset, including:
+- Identification of hottest and coldest regions
+- Seasonal climate variations across countries
+- Relationship between temperature, humidity, and wind speed
+- Detection of extreme weather conditions
+
+---
+
+## 📄 Final Report
+
+A detailed project report was prepared including:
+- Methodology and data preprocessing steps
+- Statistical analysis performed
+- Dashboard design and features
+- Key findings and interpretations
+
+---
+
+## 📽️ Presentation (PPT)
+
+A structured presentation was created covering:
+- Project overview and objectives
+- Dataset description
+- Key visualizations
+- Insights and conclusions
+- Demonstration of dashboard features
+
+---
+
+## 🌍 Final Dashboard
+
+- Fully functional and interactive Streamlit dashboard
+- User-friendly interface with dynamic filters
+- Includes Smart Travel Planner for real-world application
+
+---
+
+# 🌍 User-Centric Enhancement
+
+## 🔹 Smart Travel Planner (New Feature)
+
+To extend the project beyond analysis, a **Smart Travel Planner** feature has been integrated into the dashboard.
+
+### ✈️ Functionality
+- Allows users to select:
+  - Preferred temperature range
+  - Month of travel
+- Filters climate data to suggest suitable destinations
+- Displays top matching countries with temperature and humidity details
+
+### 💡 Impact
+This feature transforms ClimateScope from a visualization tool into a **practical decision-making application**, enabling users to plan travel based on comfortable weather conditions.
+
+---
+
+## ▶️ How to Run the Project
+
+1. Clone the repository  
+2. Install dependencies:
+   pip install -r requirements.txt
+3. Place dataset file in:
+   data/processed/final.parquet
+4. Run the dashboard:
+   streamlit run dashboard/app.py
+
+
+---
+
+## ✅ Final Outcome
+
+ClimateScope now:
+- Provides interactive climate insights  
+- Supports real-world applications  
+- Enables global accessibility through dashboard deployment  
+
+This ensures the project delivers both **analytical depth and practical value**.
