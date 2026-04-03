@@ -25,30 +25,44 @@ This project performs:
 
 ## ✅ Milestone 1 Completed
 
-- Data loading using pandas
-- Data exploration
-- Date conversion
-- Monthly aggregation
+- Data loading using pandas  
+- Data exploration  
+- Date conversion  
+- Monthly aggregation  
 
 ---
 
 ## ✅ Milestone 2 Completed
 
-- Statistical analysis
-- Correlation matrix
-- Extreme event detection
-- Country comparison
-- Time-series visualization
-- Choropleth map
-- Interactive dashboard
+- Statistical analysis  
+- Correlation matrix  
+- Extreme event detection  
+- Country comparison  
+- Time-series visualization  
+- Choropleth map  
+- Interactive dashboard  
 
+---
 
 ## ✅ Milestone 3 Completed
 
-- Interactive Streamlit dashboard
-- Weather condition distribution visualization
-- Rainfall and precipitation analysis
-- Heatwave and extreme weather summary
-- Country-wise weather comparison
-- Interactive charts using Plotly
-- Final integrated dashboard for weather insights
+- Interactive Streamlit dashboard  
+- Weather condition distribution visualization  
+- Rainfall and precipitation analysis  
+- Heatwave and extreme weather summary  
+- Country-wise weather comparison  
+- Interactive charts using Plotly  
+- Final integrated dashboard for weather insights  
+
+---
+
+## ✅ Milestone 4 Completed
+
+- Enhanced dashboard performance and UI improvements  
+- Code optimization and modular structure refinement  
+- Improved data handling and error management  
+- Final project integration and cleanup  
+- Ready for deployment and presentation  
+- Documentation updates and GitHub organization  
+
+---
