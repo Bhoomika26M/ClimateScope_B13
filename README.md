@@ -1,7 +1,5 @@
 # ClimateScope — Making Sense of the World's Weather
 
-> 200+ countries. Millions of readings. One dashboard.
-
 ---
 
 ## What is ClimateScope?
