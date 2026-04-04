@@ -914,5 +914,9 @@ st.markdown("---")
 
 st.caption(
     "🌍 ClimateScope · Global Weather Analytics · "
+<<<<<<<< HEAD:dashboard_M2.py
     "Built with Streamlit & Plotly · Rachel Fernandes"
+========
+    "Built with Streamlit & Plotly · Rachel Fernades"
+>>>>>>>> e2fb785e602b04839016dd5e6aeebca1febb0c69:climatescope_dashboard_M2
 )
